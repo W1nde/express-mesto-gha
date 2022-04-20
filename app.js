@@ -27,4 +27,4 @@ app.all("*", (req, res) => {
   res.status(404).send({ message: "Путь не найден" });
 });
 
-app.listen(PORT);
+app.listen(3000);
