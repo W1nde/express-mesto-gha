@@ -3,7 +3,7 @@ const BadRequestError = require("../errors/BadRequestError");
 
 const User = require("../models/user");
 
-module.exports.getUsers = (req, res, next) => {
+module.exports.getUser = (req, res, next) => {
   User.find({})
     .then((user) => res.status(200).send(user))
     .catch((err) => next(err));
