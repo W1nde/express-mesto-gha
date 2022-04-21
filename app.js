@@ -2,7 +2,7 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 
 const app = express();
-// const { PORT = 3000 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const bodyParser = require("body-parser");
 
@@ -27,4 +27,4 @@ app.all("*", (req, res) => {
   res.status(404).send({ message: "Путь не найден" });
 });
 
-app.listen(3000);
+app.listen(PORT);
