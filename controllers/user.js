@@ -28,18 +28,16 @@ module.exports.getUserId = (req, res, next) => {
 
 module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
-
   User.create({ name, about, avatar })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === "ValidationError") {
-        return res
-          .status(400)
-          .send({ message: "Переданы некорректные данные" });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: err.message });
     });
 };
+
 
 module.exports.updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
