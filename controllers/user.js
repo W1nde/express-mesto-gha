@@ -3,27 +3,10 @@ const BadRequestError = require("../errors/BadRequestError");
 
 const User = require("../models/user");
 
-module.exports.getUser = (req, res, next) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((user) => res.status(200).send(user))
     .catch((err) => next(err));
-};
-
-module.exports.getUserAbout = (req, res, next) => {
-  User.findById(req.user._id)
-    .then((user) => {
-      if (!user._id) {
-        next(new ErrorNotFound("Пользователь не найден"));
-      }
-      res.status(200).send(user);
-    })
-    .catch((err) => {
-      if (err.name === "CastError") {
-        next(new BadRequestError("Переданые данные некорректны"));
-      } else {
-        next(err);
-      }
-    });
 };
 
 module.exports.getUserId = (req, res, next) => {
