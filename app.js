@@ -21,8 +21,8 @@ app.use((req, res, next) => {
 
   next();
 });
-app.use("/users", require("./routes/user"));
-app.use("/cards", require("./routes/card"));
+app.use("/user", require("./routes/user"));
+app.use("/card", require("./routes/card"));
 
 app.all("*", (req, res) => {
   res.status(404).send({ message: "По указанному пути ничего нет" });
