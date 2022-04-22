@@ -53,7 +53,7 @@ module.exports.updateUserInfo = (req, res) => {
     });
 };
 
-module.exports.patchAvatar = (req, res) => {
+module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
     .then((user) => res.send({ _id: user._id, avatar }))
