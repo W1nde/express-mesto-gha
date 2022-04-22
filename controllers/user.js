@@ -1,11 +1,9 @@
 const User = require("../models/user");
-
 module.exports.getUser = (req, res) => {
   User.find({})
     .then((users) => res.send(users))
     .catch((err) => res.status(500).send({ message: err.message }));
 };
-
 module.exports.getUserId = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
@@ -23,7 +21,6 @@ module.exports.getUserId = (req, res) => {
       return res.status(500).send({ message: err.message });
     });
 };
-
 module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
 
@@ -38,7 +35,6 @@ module.exports.createUser = (req, res) => {
       return res.status(500).send({ message: err.message });
     });
 };
-
 module.exports.updateUserInfo = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true })
@@ -52,8 +48,6 @@ module.exports.updateUserInfo = (req, res) => {
       return res.status(500).send({ message: err.message });
     });
 };
-
-
 module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
@@ -67,4 +61,3 @@ module.exports.updateAvatar = (req, res) => {
       return res.status(500).send({ message: err.message });
     });
 };
-
