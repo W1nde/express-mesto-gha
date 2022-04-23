@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: "Жак-Ив Кусто",
     required: true
   },
 
@@ -13,13 +12,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: "Исследователь океана",
     required: true
   },
 
   avatar: {
     type: String,
-    default: "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png",
     required: true
   },
 
