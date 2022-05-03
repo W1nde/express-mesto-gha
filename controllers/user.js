@@ -25,15 +25,25 @@ module.exports.getUserId = (req, res) => {
 };
 
 module.exports.createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
 
-  User.create({ name, about, avatar })
-    .then((user) => res.send({ data: user }))
+  bcrypt.hash(password, 10)
+    .then((hash) => {
+      User.create({
+        name, about, avatar, email, password: hash,
+      });
+    })
+    .then((user) => {
+      res.status(201).send({
+        _id: user._id,
+        email: user.email,
+      });
+    })
     .catch((err) => {
-      if (err.name === "ValidationError") {
-        return res
-          .status(400)
-          .send({ message: "Переданы некорректные данные" });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: err.message });
     });
@@ -64,5 +74,17 @@ module.exports.updateAvatar = (req, res) => {
           .send({ message: "Переданы некорректные данные" });
       }
       return res.status(500).send({ message: err.message });
+    });
+};
+
+module.exports.login = (req, res) => {
+  const {email, password} = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, 'secret-word', { expiresIn: '7d' });
+      res.send({ token });
+    })
+    .catch((err) => {
+      res.status(401).send({ message: err.message });
     });
 };
