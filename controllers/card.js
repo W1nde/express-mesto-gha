@@ -1,7 +1,7 @@
-const Card = require('../models/card');
-const NotFound = require('../errors/NotFound');
-const Forbidden = require('../errors/Forbidden');
-const BadRequest = require('../errors/BadRequest');
+const Card = require("../models/card");
+const NotFound = require("../errors/NotFound");
+const Forbidden = require("../errors/Forbidden");
+const BadRequest = require("../errors/BadRequest");
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
@@ -9,8 +9,8 @@ module.exports.createCard = (req, res, next) => {
   Card.create({ name, link, owner })
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'BadRequest') {
-        next(new BadRequest('Переданы неккоректные данные'));
+      if (err.name === "BadRequest") {
+        next(new BadRequest("Переданы неккоректные данные"));
       } else {
         next(err);
       }
@@ -31,7 +31,7 @@ module.exports.likeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        return next(new NotFound('Карточки с таким ID не существует'));
+        return next(new NotFound("Карточки с таким ID не существует"));
       }
       return res.send(card);
     })
@@ -46,7 +46,7 @@ module.exports.dislikeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        return next(new NotFound('Карточки с указанным ID не существует'));
+        return next(new NotFound("Карточки с указанным ID не существует"));
       }
       return res.send(card);
     })
@@ -57,16 +57,16 @@ module.exports.deleteCard = (req, res, next) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((card) => {
       if (!card) {
-        next(new NotFound('Карточка не найдена'));
+        next(new NotFound("Карточка не найдена"));
       }
       if (req.user._id !== card.owner._id.toString()) {
-        next(new Forbidden('Вы не можете удалить чужую карточку'));
+        next(new Forbidden("Вы не можете удалить чужую карточку"));
       }
       return res.send(card);
     })
     .catch((err) => {
-      if (err.name === 'BadRequest') {
-        next(new BadRequest('Некорректный id карточки'));
+      if (err.name === "BadRequest") {
+        next(new BadRequest("Некорректный id карточки"));
       } else {
         next(err);
       }

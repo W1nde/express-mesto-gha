@@ -1,9 +1,9 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const NotFound = require('../errors/NotFound');
-const BadRequest = require('../errors/BadRequest');
-const Conflict = require('../errors/Conflict');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+const NotFound = require("../errors/NotFound");
+const BadRequest = require("../errors/BadRequest");
+const Conflict = require("../errors/Conflict");
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -32,7 +32,7 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.code === 11000) {
-        next(new Conflict('Пользователь с таким E-mail уже зарегистрирован'));
+        next(new Conflict("Пользователь с таким E-mail уже зарегистрирован"));
       }
       next(err);
     });
@@ -48,7 +48,7 @@ module.exports.getUserId = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        next(new NotFound('Пользователь с указанным ID не найден'));
+        next(new NotFound("Пользователь с указанным ID не найден"));
       }
       return res.send(user);
     })
@@ -60,8 +60,8 @@ module.exports.patchProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true })
     .then((user) => res.send({ _id: user._id, name, about }))
     .catch((err) => {
-      if (err.name === 'BadRequest') {
-        next(new BadRequest('Переданы некорректные данные'));
+      if (err.name === "BadRequest") {
+        next(new BadRequest("Переданы некорректные данные"));
       }
       next(err);
     });
@@ -72,8 +72,8 @@ module.exports.patchAvatar = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
     .then((user) => res.send({ _id: user._id, avatar }))
     .catch((err) => {
-      if (err.name === 'BadRequest') {
-        next(new BadRequest('Переданы некорректные данные'));
+      if (err.name === "BadRequest") {
+        next(new BadRequest("Переданы некорректные данные"));
       }
       next(err);
     });
@@ -86,10 +86,10 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'super-secret-key',
-        { expiresIn: '7d' },
+        "super-secret-key",
+        { expiresIn: "7d" },
       );
-      res.cookie('jwt', token, {
+      res.cookie("jwt", token, {
         maxAge: 3600000,
         httpOnly: true,
         sameSite: true,
@@ -104,7 +104,7 @@ module.exports.getMe = (req, res, next) => {
   User.find({ _id })
     .then((user) => {
       if (!user) {
-        next(new NotFound('Указанный пользователь не найден'));
+        next(new NotFound("Указанный пользователь не найден"));
       }
       return res.send(user);
     })

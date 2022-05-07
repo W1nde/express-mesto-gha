@@ -1,14 +1,16 @@
-const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
+const router = require("express").Router();
+const { celebrate, Joi } = require("celebrate");
 
-const { getUser, getMe, getUserId, patchProfile, patchAvatar } = require('../controllers/users');
+const {
+  getUser, getMe, getUserId, patchProfile, patchAvatar
+} = require("../controllers/user");
 
-router.get('/', getUser);
+router.get("/", getUser);
 
-router.get('/me', getMe);
+router.get("/me", getMe);
 
 router.get(
-  '/:userId',
+  "/:userId",
   celebrate({
     params: Joi.object().keys({
       userId: Joi.string().length(24).hex().required(),
@@ -18,7 +20,7 @@ router.get(
 );
 
 router.patch(
-  '/me',
+  "/me",
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30),
@@ -29,13 +31,11 @@ router.patch(
 );
 
 router.patch(
-  '/me/avatar',
+  "/me/avatar",
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string()
-        .pattern(
-          /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
-        )
+        .pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/)
         .required(),
     }),
   }),
