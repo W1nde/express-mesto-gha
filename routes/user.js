@@ -1,11 +1,11 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
-const { getUser, getUserId, updateUserInfo, updateAvatar } = require("../controllers/user");
+const { getUser, getMe, getUserId, patchProfile, patchAvatar } = require('../controllers/users');
 
-router.get('/', getUsers);
+router.get('/', getUser);
 
-router.get('/me', getUser);
+router.get('/me', getMe);
 
 router.get(
   '/:userId',
@@ -15,6 +15,17 @@ router.get(
     }),
   }),
   getUserId,
+);
+
+router.patch(
+  '/me',
+  celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().min(2).max(30),
+      about: Joi.string().min(2).max(30),
+    }),
+  }),
+  patchProfile,
 );
 
 router.patch(
@@ -28,16 +39,7 @@ router.patch(
         .required(),
     }),
   }),
-  updateAvatar,
+  patchAvatar,
 );
 
-router.patch(
-  '/me',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-    }),
-  }),
-  updateUserInfo,
-);
+module.exports = router;
