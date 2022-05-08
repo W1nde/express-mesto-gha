@@ -1,7 +1,7 @@
 class Cast extends Error {
   constructor(message) {
     super(message);
-    this.name = "CastError";
+    this.name = "Cast";
     this.statusCode = 400;
   }
 }
