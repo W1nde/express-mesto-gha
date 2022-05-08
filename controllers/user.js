@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const NotFound = require("../errors/NotFound");
-const BadRequest = require("../errors/BadRequest");
+const ValidationError = require("../errors/ValidationError");
 const Conflict = require("../errors/Conflict");
 
 module.exports.createUser = (req, res, next) => {
@@ -60,8 +60,8 @@ module.exports.patchProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true })
     .then((user) => res.send({ _id: user._id, name, about }))
     .catch((err) => {
-      if (err.name === "BadRequest") {
-        next(new BadRequest("Переданы некорректные данные"));
+      if (err.name === "ValidationError") {
+        next(new ValidationError("Переданы некорректные данные"));
       }
       next(err);
     });
@@ -72,8 +72,8 @@ module.exports.patchAvatar = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true })
     .then((user) => res.send({ _id: user._id, avatar }))
     .catch((err) => {
-      if (err.name === "BadRequest") {
-        next(new BadRequest("Переданы некорректные данные"));
+      if (err.name === "ValidationError") {
+        next(new ValidationError("Переданы некорректные данные"));
       }
       next(err);
     });
