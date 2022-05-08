@@ -54,14 +54,14 @@ module.exports.dislikeCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   Card.findById(id)
-    .orFail( () => new NotFound("Нет карточки по заданному ID") )
+    .orFail(() => new NotFound("Нет карточки по заданному ID"))
     .then((card) => {
       if (!card.owner.equals(req.user._id)) {
-        return next(new Forbidden("Нельзя удалить чужую карточку"))
+        return next(new Forbidden("Нельзя удалить чужую карточку"));
       }
       return card.remove()
         .then(() => res.send({ message: "Карточка удалена" }));
-  })
+    });
 };
