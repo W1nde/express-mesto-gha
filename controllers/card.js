@@ -2,7 +2,7 @@ const Card = require("../models/card");
 const NotFound = require("../errors/NotFound");
 const Forbidden = require("../errors/Forbidden");
 const BadRequest = require("../errors/BadRequest");
-const Cast = require("../errors/Cast")
+const Cast = require("../errors/Cast");
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
