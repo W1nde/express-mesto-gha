@@ -1,4 +1,4 @@
-class BadRequestError extends Error {
+class BadRequest extends Error {
   constructor(message) {
     super(message);
     this.errorMessage = message;
@@ -6,4 +6,4 @@ class BadRequestError extends Error {
   }
 }
 
-module.exports = BadRequestError;
+module.exports = BadRequest;

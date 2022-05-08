@@ -2,6 +2,7 @@ const Card = require("../models/card");
 const NotFound = require("../errors/NotFound");
 const Forbidden = require("../errors/Forbidden");
 const BadRequest = require("../errors/BadRequest");
+const Cast = require("../errors/Cast")
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
@@ -66,7 +67,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "BadRequest") {
-        next(new BadRequest("Некорректный id карточки"));
+        next(new Cast("Некорректный ID карточки"));
       } else {
         next(err);
       }

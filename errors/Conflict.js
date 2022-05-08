@@ -1,4 +1,4 @@
-class ConflictError extends Error {
+class Conflict extends Error {
   constructor(message) {
     super(message);
     this.name = "ConflictError";
@@ -6,4 +6,4 @@ class ConflictError extends Error {
   }
 }
 
-module.exports = ConflictError;
+module.exports = Conflict;
