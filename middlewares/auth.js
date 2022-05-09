@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   }
   let payload;
   try {
-    payload = jwt.verify(cookieAuthorization, "secret-key");
+    payload = jwt.verify(cookieAuthorization, "super-secret-key");
   } catch (err) {
     return next(new Unauthorized("Ошибка авторизации"));
   }
