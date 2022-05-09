@@ -54,8 +54,8 @@ module.exports.dislikeCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  const { id } = req.params;
-  Card.findById(id)
+  const { cardId } = req.params;
+  Card.findById(cardId)
     .orFail(() => new NotFound("Нет карточки по заданному ID"))
     .then((card) => {
       if (!card.owner.equals(req.user._id)) {
