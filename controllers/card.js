@@ -63,5 +63,6 @@ module.exports.deleteCard = (req, res, next) => {
       }
       return card.remove()
         .then(() => res.send({ message: "Карточка удалена" }));
-    });
+    })
+    .cath(next);
 };
