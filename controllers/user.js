@@ -101,7 +101,7 @@ module.exports.login = (req, res, next) => {
 
 module.exports.getMe = (req, res, next) => {
   const { _id } = req.user;
-  User.find({ _id })
+  User.findById({ _id })
     .then((user) => {
       if (!user) {
         next(new NotFound("Указанный пользователь не найден"));
